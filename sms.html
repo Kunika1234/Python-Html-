@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send SMS via Twilio</title>
+</head>
+<body>
+  <h2>Send SMS</h2>
+  <input type="text" id="to" placeholder="+91XXXXXXXXXX" />
+  <br><br>
+  <textarea id="message" placeholder="Your message..."></textarea>
+  <br><br>
+  <button onclick="sendSMS()">Send SMS</button>
+
+  <script>
+    async function sendSMS() {
+      const to = document.getElementById('to').value;
+      const message = document.getElementById('message').value;
+
+      const res = await fetch('http://localhost:3000/sms', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ to, message })
+      });
+
+      const result = await res.json();
+      alert(result.success ? 'SMS Sent!' : 'Error: ' + result.error);
+    }
+  </script>
+</body>
+</html>
